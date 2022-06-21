@@ -1,5 +1,5 @@
 const inputEmail = document.getElementById("inputEmail");
-const inputPassword = document.getElementById("inputPassword");
+const nome = document.getElementById("inputPassword");
 const btnSubmit = document.getElementById("btn");
 
 const msgEmail = document.getElementById("msgEmail");
@@ -15,7 +15,7 @@ const mensagemErroEmail = (display, text)=> {
   msgEmail.innerHTML = text;
   
 };
-const mensagemErroPassword = (display, text)=> {
+const mensagemErroNome = (display, text)=> {
   msgPassword.style.display = display;
   msgPassword.innerHTML = text;
   
@@ -43,15 +43,15 @@ inputEmail.addEventListener("change", (e)=>{
   }
 })
 
-inputPassword.addEventListener("change", (e)=>{
+nome.addEventListener("change", (e)=>{
   e.preventDefault()
  
-  if (inputPassword.value.length <=8) {
-    erro(inputPassword, true);
-    mensagemErroPassword("block", msg_02);
+  if (nome.value.length <=8) {
+    erro(nome, true);
+    mensagemErroNome("block", msg_02);
     
 } else {
-    erro(inputPassword, false);
-    mensagemErroPassword("none", "");
+    erro(nome, false);
+    mensagemErroNome("none", "");
   }
 })
