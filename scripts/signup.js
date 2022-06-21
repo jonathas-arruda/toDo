@@ -5,13 +5,17 @@ const msgNome = document.getElementById("msgNome");
 const sobrenome = document.getElementById("last-name");
 const msgSobrenome = document.getElementById("msgSobrenome");
 
-const email = document.querySelector(".email");
+const email = document.getElementById("email");
+const msgEmail = document.getElementById("msgEmail");
+
+
 const password = document.querySelectorAll(".password");
 const btnCadastro = document.getElementById("btn");
 const usuarios = {};
 
-const msg_01 = "Por favor, informe um nome válido!";
-const msg_02 = "Por favor, informe um sobrenomenome válido!";
+const msg_01 = "Por favor, informe um Nome válido!";
+const msg_02 = "Por favor, informe um Sobrenomenome válido!";
+const msg_03 = "Por favor, informe um Email válido!";
 
 const mensagemErro = (display, text, owner) => {
   owner.style.display = display;
@@ -26,7 +30,7 @@ const erro = (elemento, error) => {
   }
 };
 
-nome.addEventListener("keyup", (e) => {
+nome.addEventListener("change", (e) => {
   e.preventDefault();
 
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
@@ -40,7 +44,7 @@ nome.addEventListener("keyup", (e) => {
   }
 });
 
-sobrenome.addEventListener("keyup", (e) => {
+sobrenome.addEventListener("change", (e) => {
   e.preventDefault();
 
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
@@ -53,3 +57,18 @@ sobrenome.addEventListener("keyup", (e) => {
     mensagemErro("block", msg_02 ,msgSobrenome);
   }
 });
+
+
+email.addEventListener("change", (e)=>{
+  e.preventDefault()
+ 
+  let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
+
+  if (regexEmail.test(email.value)) {
+    erro(email, false);
+    mensagemErro("none", "", msgEmail);
+  }else{
+    erro(email, true);
+    mensagemErro("block", msg_03, msgEmail);
+  }
+})
