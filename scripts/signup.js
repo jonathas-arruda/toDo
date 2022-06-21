@@ -1,17 +1,21 @@
 // const formulario = document.querySelector('form')
 const nome = document.getElementById("name");
-const msgName = document.getElementById("msgName");
-const sobrenome = document.querySelector(".last-name");
+const msgNome = document.getElementById("msgNome");
+
+const sobrenome = document.getElementById("last-name");
+const msgSobrenome = document.getElementById("msgSobrenome");
+
 const email = document.querySelector(".email");
 const password = document.querySelectorAll(".password");
 const btnCadastro = document.getElementById("btn");
 const usuarios = {};
 
 const msg_01 = "Por favor, informe um nome válido!";
+const msg_02 = "Por favor, informe um sobrenomenome válido!";
 
-const mensagemErroNome = (display, text) => {
-  msgName.style.display = display;
-  msgName.innerHTML = text;
+const mensagemErro = (display, text, owner) => {
+  owner.style.display = display;
+  owner.innerHTML = text;
 };
 
 const erro = (elemento, error) => {
@@ -29,9 +33,23 @@ nome.addEventListener("keyup", (e) => {
 
   if (regexNome.test(nome.value) && nome.value.length >=3 ) {
     erro(nome, false);
-    mensagemErroNome("none", "");
+    mensagemErro("none", "", msgNome );
   } else {
     erro(nome, true);
-    mensagemErroNome("block", msg_01);
+    mensagemErro("block", msg_01 ,msgNome);
+  }
+});
+
+sobrenome.addEventListener("keyup", (e) => {
+  e.preventDefault();
+
+  let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
+
+  if (regexNome.test(sobrenome.value) && sobrenome.value.length >=3 ) {
+    erro(sobrenome, false);
+    mensagemErro("none", "", msgSobrenome );
+  } else {
+    erro(sobrenome, true);
+    mensagemErro("block", msg_02 ,msgSobrenome);
   }
 });
