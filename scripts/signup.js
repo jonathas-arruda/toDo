@@ -9,13 +9,27 @@ const email = document.getElementById("email");
 const msgEmail = document.getElementById("msgEmail");
 
 
-const password = document.querySelectorAll(".password");
+const password = document.getElementById("password");
+const msgPassword = document.getElementById("msgPassword");
+
+const repeatPassword = document.getElementById("repeat-password");
+const msgPasswordConfirmation = document.getElementById("msgPasswordConfirmation");
+
+
 const btnCadastro = document.getElementById("btn");
-const usuarios = {};
+const usuario = {};
 
 const msg_01 = "Por favor, informe um Nome válido!";
 const msg_02 = "Por favor, informe um Sobrenomenome válido!";
 const msg_03 = "Por favor, informe um Email válido!";
+const msg_04 = `
+Sua senha deve conter:<br/>
+ao menos uma letra minúscula<br/>
+ao menos uma letra maiúscula<br/>
+ao menos um caractere especial<br/>
+ao menos 8 dos caracteres mencionados<br/>
+`;
+const msg_05 = "As senhas precisam ser iguais!";
 
 const mensagemErro = (display, text, owner) => {
   owner.style.display = display;
@@ -33,7 +47,7 @@ const erro = (elemento, error) => {
 nome.addEventListener("change", (e) => {
   e.preventDefault();
 
-  let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
+  let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
 
   if (regexNome.test(nome.value) && nome.value.length >=3 ) {
     erro(nome, false);
@@ -47,7 +61,7 @@ nome.addEventListener("change", (e) => {
 sobrenome.addEventListener("change", (e) => {
   e.preventDefault();
 
-  let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
+  let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
 
   if (regexNome.test(sobrenome.value) && sobrenome.value.length >=3 ) {
     erro(sobrenome, false);
@@ -72,3 +86,29 @@ email.addEventListener("change", (e)=>{
     mensagemErro("block", msg_03, msgEmail);
   }
 })
+
+password.addEventListener("change", (e) => {
+  e.preventDefault();
+
+  let regexNome = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
+
+  if (regexNome.test(password.value) && password.value.length >=8 ) {
+    erro(password, false);
+    mensagemErro("none", "", msgPassword );
+  } else {
+    erro(password, true);
+    mensagemErro("block", msg_04 ,msgPassword);
+  }
+});
+
+repeatPassword.addEventListener("change", (e) => {
+  e.preventDefault();
+
+  if ( password.value == repeatPassword.value ) {
+    erro(repeatPassword, false);
+    mensagemErro("none", "", msgPasswordConfirmation );
+  } else {
+    erro(repeatPassword, true);
+    mensagemErro("block", msg_05 ,msgPasswordConfirmation);
+  }
+});
