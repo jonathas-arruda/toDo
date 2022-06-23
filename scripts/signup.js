@@ -145,3 +145,9 @@ repeatPassword.addEventListener("keyup", (e) => {
     password.value == repeatPassword.value
     )
 });
+
+btnSubmit.addEventListener("click",  (e) => {
+  e.preventDefault();
+  window.location.assign("/index.html");
+  console.log(data);
+});
