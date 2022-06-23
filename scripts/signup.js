@@ -16,8 +16,7 @@ const repeatPassword = document.getElementById("repeat-password");
 const msgPasswordConfirmation = document.getElementById("msgPasswordConfirmation");
 
 
-const btnCadastro = document.getElementById("btn");
-const usuario = {};
+const btnSubmit = document.getElementById("btn");
 
 const msg_01 = "Por favor, informe um Nome válido!";
 const msg_02 = "Por favor, informe um Sobrenomenome válido!";
@@ -30,6 +29,23 @@ ao menos um caractere especial<br/>
 ao menos 8 dos caracteres mencionados<br/>
 `;
 const msg_05 = "As senhas precisam ser iguais!";
+
+const data = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: ""
+}
+
+const habilitarBotao = (desab)=> {
+  if (desab) {
+      btnSubmit.removeAttribute("disabled");
+  } else {
+      btnSubmit.setAttribute("disabled", "");
+  }
+};
+
+
 
 const mensagemErro = (display, text, owner) => {
   owner.style.display = display;
@@ -44,7 +60,7 @@ const erro = (elemento, error) => {
   }
 };
 
-nome.addEventListener("change", (e) => {
+nome.addEventListener("keyup", (e) => {
   e.preventDefault();
 
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
@@ -52,13 +68,15 @@ nome.addEventListener("change", (e) => {
   if (regexNome.test(nome.value) && nome.value.length >=3 ) {
     erro(nome, false);
     mensagemErro("none", "", msgNome );
+    data.firstName = nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase()
+
   } else {
     erro(nome, true);
     mensagemErro("block", msg_01 ,msgNome);
   }
 });
 
-sobrenome.addEventListener("change", (e) => {
+sobrenome.addEventListener("keyup", (e) => {
   e.preventDefault();
 
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
@@ -66,6 +84,8 @@ sobrenome.addEventListener("change", (e) => {
   if (regexNome.test(sobrenome.value) && sobrenome.value.length >=3 ) {
     erro(sobrenome, false);
     mensagemErro("none", "", msgSobrenome );
+    data.lastName = sobrenome.value[0].toUpperCase() + sobrenome.value.substr(1).toLowerCase()
+
   } else {
     erro(sobrenome, true);
     mensagemErro("block", msg_02 ,msgSobrenome);
@@ -73,7 +93,7 @@ sobrenome.addEventListener("change", (e) => {
 });
 
 
-email.addEventListener("change", (e)=>{
+email.addEventListener("keyup", (e)=>{
   e.preventDefault()
  
   let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
@@ -81,13 +101,15 @@ email.addEventListener("change", (e)=>{
   if (regexEmail.test(email.value)) {
     erro(email, false);
     mensagemErro("none", "", msgEmail);
+    data.email = email.value
+
   }else{
     erro(email, true);
     mensagemErro("block", msg_03, msgEmail);
   }
 })
 
-password.addEventListener("change", (e) => {
+password.addEventListener("keyup", (e) => {
   e.preventDefault();
 
   let regexNome = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
@@ -95,20 +117,31 @@ password.addEventListener("change", (e) => {
   if (regexNome.test(password.value) && password.value.length >=8 ) {
     erro(password, false);
     mensagemErro("none", "", msgPassword );
+
   } else {
     erro(password, true);
     mensagemErro("block", msg_04 ,msgPassword);
   }
 });
 
-repeatPassword.addEventListener("change", (e) => {
+repeatPassword.addEventListener("keyup", (e) => {
   e.preventDefault();
 
   if ( password.value == repeatPassword.value ) {
     erro(repeatPassword, false);
     mensagemErro("none", "", msgPasswordConfirmation );
+    data.password = password.value
+
   } else {
     erro(repeatPassword, true);
     mensagemErro("block", msg_05 ,msgPasswordConfirmation);
   }
+
+  habilitarBotao(
+    data.firstName != "" && 
+    data.lastName != "" && 
+    data.email != "" && 
+    data.password != "" &&
+    password.value == repeatPassword.value
+    )
 });

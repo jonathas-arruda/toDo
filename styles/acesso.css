@@ -73,6 +73,11 @@ button {
   font-size: 1em;
 }
 
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
 .form-header {
   color: grey;
   font-size: 2em;
