@@ -26,25 +26,23 @@ Sua senha deve conter:<br/>
 ao menos uma letra minúscula<br/>
 ao menos uma letra maiúscula<br/>
 ao menos um caractere especial<br/>
+ao menos um número<br/>
 ao menos 8 dos caracteres mencionados<br/>
 `;
 const msg_05 = "As senhas precisam ser iguais!";
 
-const data = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: ""
-}
+const data = {}
 
-const habilitarBotao = (desab)=> {
-  if (desab) {
+
+const habilitarBotao = ()=> {
+  const {firstName,lastName,email,password,repeatPassword} = data
+  if (firstName && lastName && email && password && password == repeatPassword) {
       btnSubmit.removeAttribute("disabled");
   } else {
       btnSubmit.setAttribute("disabled", "");
   }
+  console.log(data);
 };
-
 
 
 const mensagemErro = (display, text, owner) => {
@@ -60,8 +58,7 @@ const erro = (elemento, error) => {
   }
 };
 
-nome.addEventListener("keyup", (e) => {
-  e.preventDefault();
+const validateName = (e)=>{
 
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
 
@@ -73,11 +70,13 @@ nome.addEventListener("keyup", (e) => {
   } else {
     erro(nome, true);
     mensagemErro("block", msg_01 ,msgNome);
+    data.firstName = ""
   }
-});
+  habilitarBotao()
 
-sobrenome.addEventListener("keyup", (e) => {
-  e.preventDefault();
+};
+
+const validateLastname = (e)=>{
 
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
 
@@ -89,65 +88,64 @@ sobrenome.addEventListener("keyup", (e) => {
   } else {
     erro(sobrenome, true);
     mensagemErro("block", msg_02 ,msgSobrenome);
+    data.lastName = ""
   }
-});
+  habilitarBotao()
+
+};
 
 
-email.addEventListener("keyup", (e)=>{
-  e.preventDefault()
- 
+const validateEmail = (e)=>{
+
   let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
-
-  if (regexEmail.test(email.value)) {
+  console.log(regexEmail.test(e.target.value));
+  if (regexEmail.test(e.target.value)) {
     erro(email, false);
     mensagemErro("none", "", msgEmail);
-    data.email = email.value
-
+    data.email = e.target.value
   }else{
     erro(email, true);
     mensagemErro("block", msg_03, msgEmail);
+    data.email = ""
+    
   }
-})
+  habilitarBotao()
+}
 
-password.addEventListener("keyup", (e) => {
-  e.preventDefault();
+const validatePassword = (e)=>{
 
   let regexNome = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
-
+  
   if (regexNome.test(password.value) && password.value.length >=8 ) {
     erro(password, false);
     mensagemErro("none", "", msgPassword );
-
+    data.password = e.target.value
+    
   } else {
     erro(password, true);
     mensagemErro("block", msg_04 ,msgPassword);
+    data.password = ""
   }
-});
+  habilitarBotao()
+};
 
-repeatPassword.addEventListener("keyup", (e) => {
-  e.preventDefault();
+const validateRepeatPassword = (e)=>{
 
   if ( password.value == repeatPassword.value ) {
     erro(repeatPassword, false);
     mensagemErro("none", "", msgPasswordConfirmation );
-    data.password = password.value
+    data.repeatPassword = password.value
 
   } else {
     erro(repeatPassword, true);
     mensagemErro("block", msg_05 ,msgPasswordConfirmation);
+    data.repeatPassword = ""
   }
 
-  habilitarBotao(
-    data.firstName != "" && 
-    data.lastName != "" && 
-    data.email != "" && 
-    data.password != "" &&
-    password.value == repeatPassword.value
-    )
-});
+  habilitarBotao()
+};
 
-btnSubmit.addEventListener("click",  (e) => {
+const Submit = (e) => {
   e.preventDefault();
-  window.location.assign("/index.html");
   console.log(data);
-});
+};

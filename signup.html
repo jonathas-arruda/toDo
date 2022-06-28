@@ -29,31 +29,31 @@
 
       <label>
         Nome:
-        <input type="text" id="name">
+        <input type="text" id="name" onkeyup="validateName(event)" required>
         <span id="msgNome"></span>
       </label>
       <label>
         Sobrenome:
-        <input type="text" id="last-name">
+        <input type="text" id="last-name" onkeyup="validateLastname(event)" required>
         <span id="msgSobrenome"></span>
       </label>
       <label>
         Email:
-        <input type="email" id="email">
+        <input type="email" id="email" onkeyup="validateEmail(event)" required >
         <span id="msgEmail"></span>
       </label>
       <label>
         Senha:
-        <input type="password" id="password">
+        <input type="password" id="password" onkeyup="validatePassword(event)" required >
         <span id="msgPassword"></span>
       </label>
       <label>
         Repetir senha:
-        <input type="password" id="repeat-password">
+        <input type="password" id="repeat-password" onkeyup="validateRepeatPassword(event)" required >
         <span id="msgPasswordConfirmation"></span>
       </label>
 
-      <button id="btn" disabled>Criar conta</button>
+      <button id="btn" onclick="Submit(event)" disabled>Criar conta</button>
 
     </form>
     <div class="ingressar">
