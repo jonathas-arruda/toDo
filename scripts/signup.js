@@ -8,13 +8,11 @@ const msgSobrenome = document.getElementById("msgSobrenome");
 const email = document.getElementById("email");
 const msgEmail = document.getElementById("msgEmail");
 
-
 const password = document.getElementById("password");
 const msgPassword = document.getElementById("msgPassword");
 
 const repeatPassword = document.getElementById("repeat-password");
 const msgPasswordConfirmation = document.getElementById("msgPasswordConfirmation");
-
 
 const btnSubmit = document.getElementById("btn");
 
@@ -31,19 +29,22 @@ ao menos 8 dos caracteres mencionados<br/>
 `;
 const msg_05 = "As senhas precisam ser iguais!";
 
-const data = {}
+const data = {};
 
-
-const habilitarBotao = ()=> {
-  const {firstName,lastName,email,password,repeatPassword} = data
-  if (firstName && lastName && email && password && password == repeatPassword) {
-      btnSubmit.removeAttribute("disabled");
+const habilitarBotao = () => {
+  const { firstName, lastName, email, password, repeatPassword } = data;
+  if (
+    firstName &&
+    lastName &&
+    email &&
+    password &&
+    password == repeatPassword
+  ) {
+    btnSubmit.removeAttribute("disabled");
   } else {
-      btnSubmit.setAttribute("disabled", "");
+    btnSubmit.setAttribute("disabled", "");
   }
-  console.log(data);
 };
-
 
 const mensagemErro = (display, text, owner) => {
   owner.style.display = display;
@@ -58,94 +59,121 @@ const erro = (elemento, error) => {
   }
 };
 
-const validateName = (e)=>{
-
+const validateName = (e) => {
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
 
-  if (regexNome.test(nome.value) && nome.value.length >=3 ) {
+  if (regexNome.test(nome.value) && nome.value.length >= 3) {
     erro(nome, false);
-    mensagemErro("none", "", msgNome );
-    data.firstName = nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase()
-
+    mensagemErro("none", "", msgNome);
+    data.firstName =
+      nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase();
   } else {
     erro(nome, true);
-    mensagemErro("block", msg_01 ,msgNome);
-    data.firstName = ""
+    mensagemErro("block", msg_01, msgNome);
+    data.firstName = "";
   }
-  habilitarBotao()
-
+  habilitarBotao();
 };
 
-const validateLastname = (e)=>{
-
+const validateLastname = (e) => {
   let regexNome = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/;
 
-  if (regexNome.test(sobrenome.value) && sobrenome.value.length >=3 ) {
+  if (regexNome.test(sobrenome.value) && sobrenome.value.length >= 3) {
     erro(sobrenome, false);
-    mensagemErro("none", "", msgSobrenome );
-    data.lastName = sobrenome.value[0].toUpperCase() + sobrenome.value.substr(1).toLowerCase()
-
+    mensagemErro("none", "", msgSobrenome);
+    data.lastName =
+      sobrenome.value[0].toUpperCase() +
+      sobrenome.value.substr(1).toLowerCase();
   } else {
     erro(sobrenome, true);
-    mensagemErro("block", msg_02 ,msgSobrenome);
-    data.lastName = ""
+    mensagemErro("block", msg_02, msgSobrenome);
+    data.lastName = "";
   }
-  habilitarBotao()
-
+  habilitarBotao();
 };
 
-
-const validateEmail = (e)=>{
-
-  let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
+const validateEmail = (e) => {
+  let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i;
   console.log(regexEmail.test(e.target.value));
   if (regexEmail.test(e.target.value)) {
     erro(email, false);
     mensagemErro("none", "", msgEmail);
-    data.email = e.target.value
-  }else{
+    data.email = e.target.value;
+  } else {
     erro(email, true);
     mensagemErro("block", msg_03, msgEmail);
-    data.email = ""
-    
+    data.email = "";
   }
-  habilitarBotao()
-}
+  habilitarBotao();
+};
 
-const validatePassword = (e)=>{
+const validatePassword = (e) => {
+  let regexNome =
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
 
-  let regexNome = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
-  
-  if (regexNome.test(password.value) && password.value.length >=8 ) {
+  if (regexNome.test(password.value) && password.value.length >= 8) {
     erro(password, false);
-    mensagemErro("none", "", msgPassword );
-    data.password = e.target.value
-    
+    mensagemErro("none", "", msgPassword);
+    data.password = e.target.value;
   } else {
     erro(password, true);
-    mensagemErro("block", msg_04 ,msgPassword);
-    data.password = ""
+    mensagemErro("block", msg_04, msgPassword);
+    data.password = "";
   }
-  habilitarBotao()
+  habilitarBotao();
 };
 
-const validateRepeatPassword = (e)=>{
-
-  if ( password.value == repeatPassword.value ) {
+const validateRepeatPassword = (e) => {
+  if (password.value == repeatPassword.value) {
     erro(repeatPassword, false);
-    mensagemErro("none", "", msgPasswordConfirmation );
-    data.repeatPassword = password.value
-
+    mensagemErro("none", "", msgPasswordConfirmation);
+    data.repeatPassword = password.value;
   } else {
     erro(repeatPassword, true);
-    mensagemErro("block", msg_05 ,msgPasswordConfirmation);
-    data.repeatPassword = ""
+    mensagemErro("block", msg_05, msgPasswordConfirmation);
+    data.repeatPassword = "";
   }
 
-  habilitarBotao()
+  habilitarBotao();
 };
 
-const Submit = (e) => {
+  const Submit = (e) => {
   e.preventDefault();
+
+  delete data.repeatPassword
+
   console.log(data);
+
+  const configuracaoRequisicao = {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  
+  fetch("https://ctd-todo-api.herokuapp.com/v1/users", configuracaoRequisicao)
+    .then((response) => {
+      if (response.status == 201) {
+        return response.json();
+      }
+    })
+    .then(function (resposta) {
+      console.log(resposta);
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data)
+      );
+      alert("Usuario cadastrado com sucesso");
+      location.href = "/index.html"
+    })
+    .catch((error) => {
+      cadastroErro(error);
+    });
+
+  function cadastroErro(statusErro) {
+    console.log("Erro ao cadastrar");
+    console.log(statusErro);
+  }
+
 };
