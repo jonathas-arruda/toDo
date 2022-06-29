@@ -65,8 +65,7 @@ const validateName = (e) => {
   if (regexNome.test(nome.value) && nome.value.length >= 3) {
     erro(nome, false);
     mensagemErro("none", "", msgNome);
-    data.firstName =
-      nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase();
+    data.firstName = nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase();
   } else {
     erro(nome, true);
     mensagemErro("block", msg_01, msgNome);
