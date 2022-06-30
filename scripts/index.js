@@ -15,7 +15,7 @@ const mensagemErroEmail = (display, text)=> {
   msgEmail.innerHTML = text;
   
 };
-const mensagemErroNome = (display, text)=> {
+const mensagemErroPass = (display, text)=> {
   msgPassword.style.display = display;
   msgPassword.innerHTML = text;
   
@@ -29,7 +29,7 @@ const erro = (elemento, error)=>{
   }
 };
 
-inputEmail.addEventListener("keyup", (e)=>{
+inputEmail.addEventListener("change", (e)=>{
   e.preventDefault()
  
   let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
@@ -49,19 +49,18 @@ inputPassword.addEventListener("keyup", (e)=>{
   
   if (inputPassword.value.length <=8) {
     erro(inputPassword, true);
-    mensagemErroNome("block", msg_02);
+    mensagemErroPass("block", msg_02);
     
   } else {
     erro(inputPassword, false);
-    mensagemErroNome("none", "");
+    mensagemErroPass("none", "");
     data.password = inputPassword.value
   }
 })
 
 
 const Submit = (e) => {
-  e.preventDefault();
-  console.log(data);
+  e.preventDefault()
 
   const configuracaoRequisicao = {
     method: "POST",
@@ -79,14 +78,12 @@ const Submit = (e) => {
 
   })
   .then(function(resposta){
-    console.log(resposta)
-    alert("Login successful")
+    resposta.jwt != "" && alert("Login successful")  
     localStorage.setItem("token", resposta.jwt)
     window.location.href = "tarefas.html"
-
+  
   })
   .catch(err=> {
-    console.log(err)
     alert("Login failed")
   })
 }
