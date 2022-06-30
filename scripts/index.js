@@ -78,12 +78,14 @@ const Submit = (e) => {
 
   })
   .then(function(resposta){
-    resposta.jwt != "" && alert("Login successful")  
+    resposta != "" && alert("Login successful"); 
     localStorage.setItem("token", resposta.jwt)
     window.location.href = "tarefas.html"
-  
+    console.log(resposta);
+    console.log(data);
   })
   .catch(err=> {
+    console.log(err);
     alert("Login failed")
   })
 }
