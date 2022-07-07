@@ -47,7 +47,7 @@ function renderizarTarefas(tasks) {
   listaTerminadas.innerHTML = "";
   console.log(tasks);
 
-  setTimeout(() => {
+  // setTimeout(() => {
    tasks.forEach(task => {
       
       const dataFormatada = new Date(task.createdAt).toLocaleDateString(
@@ -68,7 +68,7 @@ function renderizarTarefas(tasks) {
               <div class="descricao">
               <p class="nome">${task.description}</p>
               <p class="timestamp"> Criada em: ${dataFormatada}</p>
-              <button class="close" onclick="RemoverTarefa(${task.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
+              <button class="close" onclick="removerTarefa(${task.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
               </div>
               </li>`;
       } else {
@@ -78,12 +78,12 @@ function renderizarTarefas(tasks) {
         <div class="descricao">
           <p class="nome">${task.description}</p>
           <p class="timestamp"> Criada em: ${dataFormatada}</p>
-          <button class="close" onclick="RemoverTarefa(${task.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
+          <button class="close" onclick="removerTarefa(${task.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
         </div>
       </li>`;
       }
     });
-  }, 500);
+  // }, 500);
 }
 
 function listarTarefas() {
@@ -146,6 +146,7 @@ function criarTarefa(e) {
         <div class="descricao">
           <p class="nome">${data.description}</p>
           <p class="timestamp"> Criada em: ${dataFormatada}</p>
+          <button class="close" onclick="removerTarefa(${data.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
         </div>
       </li>`;
     })
@@ -163,6 +164,27 @@ function atualizarTarefa(id,completedStatus){
       Authorization: jwt,
     },
     body: JSON.stringify({completed:completedStatus}),
+  };
+  
+  fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
+  .then((response) => response.json())
+
+  .then(() => { 
+    listarTarefas()
+  })
+
+  .catch((err) => {
+    console.log(err);
+  });
+}
+
+function removerTarefa(id){
+  const configuracaoRequisicao = {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: jwt,
+    },
   };
   
   fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
