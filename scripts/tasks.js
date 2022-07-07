@@ -48,7 +48,8 @@ function renderizarTarefas(tasks) {
   console.log(tasks);
 
   setTimeout(() => {
-    for( let task of tasks){
+   tasks.forEach(task => {
+      
       const dataFormatada = new Date(task.createdAt).toLocaleDateString(
         "pt-BR",
         {
@@ -61,26 +62,28 @@ function renderizarTarefas(tasks) {
       );
 
       if (task.completed) {
-        listaTerminadas.innerHTML += `<li class="tarefa">
-                <div class="not-done"
-                onclick="RemoverTarefa(${task.id})></div>
-                <div class="descricao">
-                  <p class="nome">${task.description}</p>
-                  <p class="timestamp"> "Criada em:" ${dataFormatada}</p>u
-                </div>
+        listaTerminadas.innerHTML += `
+              <li class="tarefa">
+              <div class="not-done" onclick="atualizarTarefa(${task.id},false)"><img src="./assets/undo.svg" alt="Tarefa feita."></div>
+              <div class="descricao">
+              <p class="nome">${task.description}</p>
+              <p class="timestamp"> Criada em: ${dataFormatada}</p>
+              <button class="close" onclick="RemoverTarefa(${task.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
+              </div>
               </li>`;
       } else {
         listaPendente.innerHTML += `
         <li class="tarefa">
-        <div class="not-done" onclick="atualizarTarefa(${task.id},true)"></div>
+        <div class="not-done" onclick="atualizarTarefa(${task.id},true)"><img src="./assets/check-line.svg" alt="Tarefa feita."></div>
         <div class="descricao">
           <p class="nome">${task.description}</p>
           <p class="timestamp"> Criada em: ${dataFormatada}</p>
+          <button class="close" onclick="RemoverTarefa(${task.id})"><img src="./assets/close.svg" alt="Tarefa feita."></button>
         </div>
       </li>`;
       }
-    };
-  }, 1000);
+    });
+  }, 500);
 }
 
 function listarTarefas() {
@@ -139,7 +142,7 @@ function criarTarefa(e) {
       );
       listaPendente.innerHTML += `
         <li class="tarefa">
-        <div class="not-done" onclick="atualizarTarefa(${data.id},true)"></div>
+        <div class="not-done" onclick="atualizarTarefa(${data.id},true)"><img src="./assets/check-line.svg" alt="Tarefa feita."></div>
         <div class="descricao">
           <p class="nome">${data.description}</p>
           <p class="timestamp"> Criada em: ${dataFormatada}</p>
@@ -150,4 +153,28 @@ function criarTarefa(e) {
     .catch((err) => {
       console.log(err);
     });
+}
+
+function atualizarTarefa(id,completedStatus){
+  const configuracaoRequisicao = {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: jwt,
+    },
+    body: JSON.stringify({completed:completedStatus}),
+  };
+  
+  fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
+  .then((response) => response.json())
+
+  .then(() => { 
+    listarTarefas()
+  })
+
+  .catch((err) => {
+    console.log(err);
+  });
+
+  
 }
