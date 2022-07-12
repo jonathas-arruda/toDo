@@ -197,6 +197,11 @@ function removerTarefa(id){
   .catch((err) => {
     console.log(err);
   });
+  
+}
+
+function finalizar( ) {
+  window.location.href = "index.html"
 
   
 }

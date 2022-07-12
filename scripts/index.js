@@ -30,8 +30,6 @@ const erro = (elemento, error)=>{
 };
 
 inputEmail.addEventListener("change", (e)=>{
-  e.preventDefault()
- 
   let regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
   if (regexEmail.test(inputEmail.value)) {
@@ -45,7 +43,6 @@ inputEmail.addEventListener("change", (e)=>{
 })
 
 inputPassword.addEventListener("keyup", (e)=>{
-  e.preventDefault()
   
   if (inputPassword.value.length <=8) {
     erro(inputPassword, true);
