@@ -12,7 +12,9 @@ const password = document.getElementById("password");
 const msgPassword = document.getElementById("msgPassword");
 
 const repeatPassword = document.getElementById("repeat-password");
-const msgPasswordConfirmation = document.getElementById("msgPasswordConfirmation");
+const msgPasswordConfirmation = document.getElementById(
+  "msgPasswordConfirmation"
+);
 
 const btnSubmit = document.getElementById("btn");
 
@@ -65,7 +67,8 @@ const validateName = (e) => {
   if (regexNome.test(nome.value) && nome.value.length >= 3) {
     erro(nome, false);
     mensagemErro("none", "", msgNome);
-    data.firstName = nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase();
+    data.firstName =
+      nome.value[0].toUpperCase() + nome.value.substr(1).toLowerCase();
   } else {
     erro(nome, true);
     mensagemErro("block", msg_01, msgNome);
@@ -136,10 +139,11 @@ const validateRepeatPassword = (e) => {
   habilitarBotao();
 };
 
-  const Submit = (e) => {
+const Submit = (e) => {
   e.preventDefault();
+  mostrarSpinner()
 
-  delete data.repeatPassword
+  delete data.repeatPassword;
 
   console.log(data);
 
@@ -150,29 +154,57 @@ const validateRepeatPassword = (e) => {
     },
     body: JSON.stringify(data),
   };
-  
-  fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users", configuracaoRequisicao)
-    .then((response) => {
-      if (response.status == 201) {
-        return response.json();
-      }
-    })
-    .then(function (resposta) {
-      console.log(resposta);
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data)
-      );
-      alert("Usuario cadastrado com sucesso");
-      location.href = "/index.html"
-    })
-    .catch((error) => {
-      cadastroErro(error);
-    });
+
+  setTimeout(() => {
+    fetch(
+      "https://ctd-fe2-todo-v2.herokuapp.com/v1/users",
+      configuracaoRequisicao
+    )
+      .then((response) => {
+        if (response.status == 201) {
+          return response.json();
+        }
+      })
+      .then(function (resposta) {
+        ocultarSpinner()
+        localStorage.setItem("user", JSON.stringify(data));
+        alert("Usuario cadastrado com sucesso");
+        location.href = "/index.html";
+      })
+      .catch((error) => {
+        cadastroErro(error);
+      });
+  }, 3000);
 
   function cadastroErro(statusErro) {
     console.log("Erro ao cadastrar");
     console.log(statusErro);
   }
-
 };
+
+const body = document.querySelector("body");
+const form = document.querySelector("form");
+
+function mostrarSpinner() {
+  const spinnerContainer = document.createElement("div");
+  const spinner = document.createElement("div");
+
+  spinnerContainer.setAttribute("id", "container-load");
+  spinner.setAttribute("id", "load");
+
+  form.classList.add("hidden");
+
+  spinnerContainer.appendChild(spinner);
+  body.appendChild(spinnerContainer);
+
+  return;
+}
+
+function ocultarSpinner() {
+  const spinnerContainer = document.querySelector("#container-load");
+
+  body.removeChild(spinnerContainer);
+
+  form.classList.remove("hidden");
+  return;
+}

@@ -77,7 +77,7 @@ const Submit = (e) => {
     }
 
   })
-  .then(function(resposta){
+  .then(function(resposta){''
     resposta != "" && alert("Login successful"); 
     localStorage.setItem("token", resposta.jwt)
     window.location.href = "tarefas.html"
