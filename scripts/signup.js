@@ -151,7 +151,7 @@ const validateRepeatPassword = (e) => {
     body: JSON.stringify(data),
   };
   
-  fetch("https://ctd-todo-api.herokuapp.com/v1/users", configuracaoRequisicao)
+  fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users", configuracaoRequisicao)
     .then((response) => {
       if (response.status == 201) {
         return response.json();

@@ -70,7 +70,7 @@ const Submit = (e) => {
     body: JSON.stringify(data),
   };
   
-  fetch("https://ctd-todo-api.herokuapp.com/v1/users/login",configuracaoRequisicao)
+  fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/login",configuracaoRequisicao)
   .then(response => {
     if (response.status === 201){
         return response.json()

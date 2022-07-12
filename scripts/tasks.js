@@ -27,7 +27,7 @@ function receberUsuario() {
   };
 
   fetch(
-    "https://ctd-todo-api.herokuapp.com/v1/users/getMe",
+    "https://ctd-fe2-todo-v2.herokuapp.com/v1/users/getMe",
     configuracaoRequisicao
   )
     .then((response) => response.json())
@@ -95,7 +95,7 @@ function listarTarefas() {
     },
   };
 
-  fetch("https://ctd-todo-api.herokuapp.com/v1/tasks", configuracaoRequisicao)
+  fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks", configuracaoRequisicao)
     .then((response) => response.json() )
 
     .then((data) => {
@@ -126,7 +126,7 @@ function criarTarefa(e) {
     body: JSON.stringify(dataTask),
   };
 
-  fetch("https://ctd-todo-api.herokuapp.com/v1/tasks", configuracaoRequisicao)
+  fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks", configuracaoRequisicao)
     .then((response) => response.json())
 
     .then((data) => {
@@ -166,7 +166,7 @@ function atualizarTarefa(id,completedStatus){
     body: JSON.stringify({completed:completedStatus}),
   };
   
-  fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
+  fetch(`https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
   .then((response) => response.json())
 
   .then(() => { 
@@ -187,7 +187,7 @@ function removerTarefa(id){
     },
   };
   
-  fetch(`https://ctd-todo-api.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
+  fetch(`https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/${id}`, configuracaoRequisicao)
   .then((response) => response.json())
 
   .then(() => { 
